@@ -22,35 +22,35 @@
     }
 }(function (chai, utils) {
 
-    function shallowDeepEqual(expect, actual) {
+    function shallowDeepEqual(expect, actual, path) {
         // scalar description
         if (/boolean|number|string/.test(typeof expect)) {
-            return expect == actual;
+            if (expect != actual) {
+                throw 'Expected "' + actual +'" to equal "'+ expect +'" at path "'+ path +'".';
+            }
+
+            return true;
         }
 
         // array/object description
         for (var prop in expect) {
             if (typeof actual[prop] == 'undefined') {
-                return false;
+                throw 'Cannot find property "' + prop +'" at path "'+ path +'".';
             }
 
-            if (!shallowDeepEqual(expect[prop], actual[prop])) {
-                return false;
-            }
+            shallowDeepEqual(expect[prop], actual[prop], path + '/' + prop);
         }
 
         return true;
     }
 
     chai.Assertion.addMethod('shallowDeepEqual', function (expect) {
-        var actual = this._obj;
-
-        this.assert(
-            shallowDeepEqual(expect, actual),
-            'expected #{this} to shallowly equal #{exp}',
-            'expected #{this} to not shallowly equal #{exp}',
-            expect,
-            actual);
+        try {
+            shallowDeepEqual(expect, this._obj, '.');
+        }
+        catch (msg) {
+            this.assert(false, msg);
+        }
     });
 
     chai.assert.shallowDeepEqual = function(val, exp, msg) {
