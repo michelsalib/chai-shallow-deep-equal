@@ -1,0 +1,50 @@
+{
+    "name": "chai-shallow-deep-equal",
+    "version": "0.0.1",
+    "description": "Shallow deep equal assertion for chai",
+    "keywords": [
+        "chai",
+        "test",
+        "assertion",
+        "assert",
+        "testing",
+        "shallow",
+        "deep"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/michelsalib/chai-shallow-deep-equal.git"
+    },
+    "bugs": {
+        "url": "https://github.com/michelsalib/chai-shallow-deep-equal/issues"
+    },
+    "readmeFilename": "README.md",
+    "devDependencies": {
+        "chai": "~1.9.0",
+        "mocha": "~1.20.0"
+    },
+    "peerDependencies": {
+        "chai": ">= 1.9.0 < 2"
+    },
+    "scripts": {
+        "test": "mocha --recursive -C"
+    },
+    "main": "chai-shallow-deep-equal.js",
+    "directories": {
+        "test": "test"
+    },
+    "author": {
+        "name": "Michel Salib",
+        "email": "michelsalib@hotmail.com",
+        "url": "http://michelsalib.com/"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/Bartvds/chai-fs/blob/master/LICENSE-MIT"
+        }
+    ],
+    "engines": {
+        "node": ">= 0.6.0"
+    }
+}
