@@ -124,4 +124,13 @@ describe('chai-shallow-deep-equal', function() {
             '"2014-09-29T20:00:00.000Z" at path ".".'
         );
     });
+
+    it('fail on comparsion date with non-date', function() {
+      new chai.Assertion(function() {
+          new chai.Assertion(42)
+              .to.be.shallowDeepEqual(new Date('2014-09-29T20:00:00.000Z'));
+      }).fail(
+          'Expected "42" to equal ' + '"2014-09-29T20:00:00.000Z" at path ".".'
+      );
+    });
 });

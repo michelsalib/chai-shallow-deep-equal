@@ -34,11 +34,19 @@
 
         // dates
         if (expect.constructor === Date) {
-            if (expect.getTime() != actual.getTime()) {
-                throw(
-                    'Expected "' + actual.toISOString() + '" to equal ' +
-                    '"' + expect.toISOString() + '" at path "' + path + '".'
-                );
+            if (actual.constructor == Date) {
+                if (expect.getTime() != actual.getTime()) {
+                    throw(
+                        'Expected "' + actual.toISOString() + '" to equal ' +
+                        '"' + expect.toISOString() + '" at path "' + path + '".'
+                    );
+                }
+
+            } else {
+              throw(
+                  'Expected "' + actual + '" to equal ' +
+                  '"' + expect.toISOString() + '" at path "' + path + '".'
+              );
             }
         }
 
