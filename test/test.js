@@ -109,4 +109,28 @@ describe('chai-shallow-deep-equal', function() {
             new chai.Assertion([{b: 12}, {c: 15}]).to.be.shallowDeepEqual({length: 3});
         }).fail('Expected "2" to equal "3" at path "./length".');
     });
+
+    it('success on dates', function() {
+        new chai.Assertion(new Date("2014-09-30T20:00:00.000Z"))
+            .to.be.shallowDeepEqual(new Date("2014-09-30T20:00:00.000Z"));
+    });
+
+    it('fail on dates', function() {
+        new chai.Assertion(function() {
+            new chai.Assertion(new Date('2014-09-30T20:00:00.000Z'))
+                .to.be.shallowDeepEqual(new Date('2014-09-29T20:00:00.000Z'));
+        }).fail(
+            'Expected "2014-09-30T20:00:00.000Z" to equal ' +
+            '"2014-09-29T20:00:00.000Z" at path ".".'
+        );
+    });
+
+    it('fail on comparsion date with non-date', function() {
+      new chai.Assertion(function() {
+          new chai.Assertion(42)
+              .to.be.shallowDeepEqual(new Date('2014-09-29T20:00:00.000Z'));
+      }).fail(
+          'Expected "42" to equal ' + '"2014-09-29T20:00:00.000Z" at path ".".'
+      );
+    });
 });
