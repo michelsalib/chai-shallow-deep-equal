@@ -1,4 +1,4 @@
-# chai-datetime
+# chai-shallow-deep-equal
 
 Will shallowly perform a deep equal assertion. In other terms is consit of checking that an object, or objects graph, is contained within another one (see examples bellow).
 
