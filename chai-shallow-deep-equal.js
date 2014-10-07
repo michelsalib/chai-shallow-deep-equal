@@ -34,7 +34,7 @@
 
         // dates
         if (expect.constructor === Date) {
-            if (actual.constructor == Date) {
+            if (actual.constructor === Date) {
                 if (expect.getTime() != actual.getTime()) {
                     throw(
                         'Expected "' + actual.toISOString() + '" to equal ' +
