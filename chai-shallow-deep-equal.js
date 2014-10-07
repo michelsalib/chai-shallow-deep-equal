@@ -32,6 +32,16 @@
             return true;
         }
 
+        // dates
+        if (expect.constructor === Date) {
+            if (expect.getTime() != actual.getTime()) {
+                throw(
+                    'Expected "' + actual.toISOString() + '" to equal ' +
+                    '"' + expect.toISOString() + '" at path "' + path + '".'
+                );
+            }
+        }
+
         // array/object description
         for (var prop in expect) {
             if (typeof actual[prop] == 'undefined') {
