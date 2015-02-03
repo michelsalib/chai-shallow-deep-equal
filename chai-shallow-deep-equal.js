@@ -22,7 +22,21 @@
     }
 }(function (chai, utils) {
 
+    function _nullOrUndefined(value) {
+        return (value === null) || (typeof value == 'undefined')
+    }
+
     function shallowDeepEqual(expect, actual, path) {
+
+        // null value
+        if (expect === null) {
+            if (! _nullOrUndefined(actual)) {
+              throw 'Expected "' + actual +'" to equal "'+ expect +'" at path "'+ path +'".';
+            }
+
+            return true;
+        }
+
         // scalar description
         if (/boolean|number|string/.test(typeof expect)) {
             if (expect != actual) {
@@ -52,8 +66,12 @@
 
         // array/object description
         for (var prop in expect) {
-            if (typeof actual[prop] == 'undefined') {
-                throw 'Cannot find property "' + prop +'" at path "'+ path +'".';
+            if (_nullOrUndefined(actual[prop])) {
+                if (expect[prop] === null) {
+                    return true
+                } else {
+                    throw 'Cannot find property "' + prop +'" at path "'+ path +'".';
+                }
             }
 
             shallowDeepEqual(expect[prop], actual[prop], path + '/' + prop);

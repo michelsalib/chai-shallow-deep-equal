@@ -133,4 +133,34 @@ describe('chai-shallow-deep-equal', function() {
           'Expected "42" to equal ' + '"2014-09-29T20:00:00.000Z" at path ".".'
       );
     });
+
+    it('success on missing properties', function() {
+        new chai.Assertion({a: 10}).to.be.shallowDeepEqual({a: 10, b: null});
+    });
+
+    it('success on null properties', function() {
+        new chai.Assertion({a: 10, b: null}).to.be.shallowDeepEqual({a: 10, b: null});
+    });
+
+    it('fail on missing properties', function() {
+        new chai.Assertion(function() {
+            new chai.Assertion({a: 10, b: 12}).to.be.shallowDeepEqual({a: 10, b: null});
+        }).fail('Expected "12" to equal "null" at path "./b".');
+    });
+
+    it('success on null', function() {
+        new chai.Assertion(null).to.be.shallowDeepEqual(null);
+    });
+
+    it('success on undefined', function() {
+        var a = {};
+        new chai.Assertion(a.unknown).to.be.shallowDeepEqual(null);
+    });
+
+    it('fail on null', function() {
+        new chai.Assertion(function() {
+            new chai.Assertion(23).to.be.shallowDeepEqual(null);
+        }).fail('Expected "23" to equal "null" at path ".".');
+    });
+
 });

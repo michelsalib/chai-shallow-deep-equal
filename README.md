@@ -1,6 +1,6 @@
 # chai-shallow-deep-equal
 
-Will shallowly perform a deep equal assertion. In other terms is consit of checking that an object, or objects graph, is contained within another one (see examples bellow).
+Will shallowly perform a deep equal assertion. In other terms is consist of checking that an object, or objects graph, is contained within another one (see examples bellow).
 
 [![NPM version](https://badge.fury.io/js/chai-shallow-deep-equal.png)](http://badge.fury.io/js/chai-shallow-deep-equal)
 [![Build Status](https://travis-ci.org/michelsalib/chai-shallow-deep-equal.png?branch=master)](https://travis-ci.org/michelsalib/chai-shallow-deep-equal)
@@ -51,7 +51,7 @@ assert.shallowDeepEqual({
     'developer',
     'gamer'
   ]}); // true
-  
+
 assert.shallowDeepEqual({
   length: 2,
   0: {color: 'red'},
@@ -62,6 +62,12 @@ assert.shallowDeepEqual({
     {brand: 'samsung', color: 'blue'},
   ]); // true
 
+assert.shallowDeepEqual({
+  name: 'Michel',
+  age: 37
+  },
+  {
+  name: 'Michel',
+  age: null
+}); // false (age should not be defined)
 ```
-
-
