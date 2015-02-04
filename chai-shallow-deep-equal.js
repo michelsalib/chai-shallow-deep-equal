@@ -27,7 +27,7 @@
         // null value
         if (expect === null) {
             if (! (actual === null)) {
-              throw 'Expected "' + actual +'" to equal "'+ expect +'" at path "'+ path +'".';
+              throw 'Expected "' + actual +'" to be null at path "'+ path +'".';
             }
 
             return true;
@@ -36,7 +36,7 @@
         // undefined value
         if (typeof expect == 'undefined') {
             if (! (typeof actual == 'undefined')) {
-              throw 'Expected "' + actual +'" to equal "'+ expect +'" at path "'+ path +'".';
+              throw 'Expected "' + actual +'" to be undefined at path "'+ path +'".';
             }
 
             return true;
