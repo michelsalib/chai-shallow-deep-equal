@@ -69,16 +69,12 @@
             }
         }
 
+        if (actual === null) {
+            throw 'Expected null to be an array/object at path "' + path + '".';
+        }
+
         // array/object description
         for (var prop in expect) {
-            if (typeof actual[prop] == 'undefined') {
-                if (typeof expect[prop] == 'undefined') {
-                    return true
-                } else {
-                    throw 'Cannot find property "' + prop +'" at path "'+ path +'".';
-                }
-            }
-
             shallowDeepEqual(expect[prop], actual[prop], path + '/' + prop);
         }
 

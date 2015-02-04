@@ -175,4 +175,10 @@ describe('chai-shallow-deep-equal', function() {
         }).fail('Expected "23" to be undefined at path ".".');
     });
 
+    it('fail on unexisting array', function() {
+        new chai.Assertion(function() {
+            new chai.Assertion(null).to.be.shallowDeepEqual(['a']);
+        }).fail('Expected null to be an array/object at path ".".');
+    });
+
 });
