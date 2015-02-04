@@ -68,6 +68,6 @@ assert.shallowDeepEqual({
   },
   {
   name: 'Michel',
-  age: null
+  age: undefined
 }); // false (age should not be defined)
 ```
