@@ -110,6 +110,17 @@ describe('chai-shallow-deep-equal', function() {
         }).fail('Expected "2" to equal "3" at path "./length".');
     });
 
+    it('success on accessors', function() {
+        function test() { }
+        Object.defineProperty(test.prototype, 'a', {
+            get: function() {
+                return 'b';
+            }
+        });
+
+        new chai.Assertion(new test()).to.be.shallowDeepEqual({ a: 'b' });
+    });
+
     it('success on dates', function() {
         new chai.Assertion(new Date("2014-09-30T20:00:00.000Z"))
             .to.be.shallowDeepEqual(new Date("2014-09-30T20:00:00.000Z"));
