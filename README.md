@@ -37,37 +37,37 @@ assert.shallowDeepEqual(a, b);
 ## Example
 
 ```javascript
-assert.shallowDeepEqual({name: 'Michel'}, {name: 'Michel', language: 'javascript'}); // true
+assert.shallowDeepEqual({name: 'Michel', language: 'javascript'}, {name: 'Michel'}); // true
 
 assert.shallowDeepEqual({
-  name: 'Michel',
-  tags: [
-    'developer'
-  ]},
-  {
   name: 'Michel',
   language: 'javascript',
   tags: [
     'developer',
     'gamer'
+  ]},
+  {
+  name: 'Michel',
+  tags: [
+    'developer'
   ]}); // true
 
-assert.shallowDeepEqual({
+assert.shallowDeepEqual([
+    {brand: 'apple', color: 'red'},
+    {brand: 'samsung', color: 'blue'},
+  ],
+  {
   length: 2,
   0: {color: 'red'},
   1: {brand: 'samsung'},
-  },
-  [
-    {brand: 'apple', color: 'red'},
-    {brand: 'samsung', color: 'blue'},
-  ]); // true
+  }); // true
 
 assert.shallowDeepEqual({
   name: 'Michel',
-  age: 37
+  age: undefined
   },
   {
   name: 'Michel',
-  age: undefined
-}); // false (age should not be defined)
+  age: 37
+  }); // false (age should not be defined)
 ```
