@@ -41,15 +41,15 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on scalar values', function() {
         new chai.Assertion(function() {
             new chai.Assertion(true).to.be.shallowDeepEqual(false);
-        }).fail('Expected "true" to equal "false" at path ".".');
+        }).fail('Expected to have "false" but got "true" at path "/".');
 
         new chai.Assertion(function() {
             new chai.Assertion(10).to.be.shallowDeepEqual(42);
-        }).fail('Expected "10" to equal "42" at path ".".');
+        }).fail('Expected to have "42" but got "10" at path "/".');
 
         new chai.Assertion(function() {
             new chai.Assertion('success').to.be.shallowDeepEqual('fail');
-        }).fail('Expected "success" to equal "fail" at path ".".');
+        }).fail('Expected to have "fail" but got "success" at path "/".');
     });
 
     it('success on empty objects', function() {
@@ -67,7 +67,7 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on simple objects', function() {
         new chai.Assertion(function() {
             new chai.Assertion({a: 10, b: 12}).to.be.shallowDeepEqual({a: 11});
-        }).fail('Expected "10" to equal "11" at path "./a".');
+        }).fail('Expected to have "11" but got "10" at path "/a".');
     });
 
     it('success on array', function() {
@@ -77,7 +77,7 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on array', function() {
         new chai.Assertion(function() {
             new chai.Assertion([10,11,12]).to.be.shallowDeepEqual([13]);
-        }).fail('Expected "10" to equal "13" at path "./0".');
+        }).fail('Expected to have "13" but got "10" at path "/0".');
     });
 
     it('success on deep objects', function() {
@@ -87,7 +87,7 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on deep objects', function() {
         new chai.Assertion(function() {
             new chai.Assertion({a: {b: 12, c: 15}}).to.be.shallowDeepEqual({a: {b: 13}});
-        }).fail('Expected "12" to equal "13" at path "./a/b".');
+        }).fail('Expected to have "13" but got "12" at path "/a/b".');
     });
 
     it('success on deep array', function() {
@@ -97,7 +97,7 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on deep array', function() {
         new chai.Assertion(function() {
             new chai.Assertion([{b: 12, c: 15}]).to.be.shallowDeepEqual([{b: 13}]);
-        }).fail('Expected "12" to equal "13" at path "./0/b".');
+        }).fail('Expected to have "13" but got "12" at path "/0/b".');
     });
 
     it('success on using object as array', function() {
@@ -107,7 +107,7 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on using object as array', function() {
         new chai.Assertion(function() {
             new chai.Assertion([{b: 12}, {c: 15}]).to.be.shallowDeepEqual({length: 3});
-        }).fail('Expected "2" to equal "3" at path "./length".');
+        }).fail('Expected to have "3" but got "2" at path "/length".');
     });
 
     it('success on accessors', function() {
@@ -131,8 +131,7 @@ describe('chai-shallow-deep-equal', function() {
             new chai.Assertion(new Date('2014-09-30T20:00:00.000Z'))
                 .to.be.shallowDeepEqual(new Date('2014-09-29T20:00:00.000Z'));
         }).fail(
-            'Expected "2014-09-30T20:00:00.000Z" to equal ' +
-            '"2014-09-29T20:00:00.000Z" at path ".".'
+            'Expected to have date "2014-09-29T20:00:00.000Z" but got "2014-09-30T20:00:00.000Z" at path "/".'
         );
     });
 
@@ -141,7 +140,7 @@ describe('chai-shallow-deep-equal', function() {
           new chai.Assertion(42)
               .to.be.shallowDeepEqual(new Date('2014-09-29T20:00:00.000Z'));
       }).fail(
-          'Expected "42" to equal ' + '"2014-09-29T20:00:00.000Z" at path ".".'
+          'Expected to have date "2014-09-29T20:00:00.000Z" but got "42" at path "/".'
       );
     });
 
@@ -156,13 +155,13 @@ describe('chai-shallow-deep-equal', function() {
     it('fail on missing properties', function() {
         new chai.Assertion(function() {
             new chai.Assertion({a: 10, b: 12}).to.be.shallowDeepEqual({a: 10, b: undefined});
-        }).fail('Expected "12" to be undefined at path "./b".');
+        }).fail('Expected to have undefined but got "12" at path "/b".');
     });
 
     it('fail on null properties', function() {
         new chai.Assertion(function() {
             new chai.Assertion({a: 10, b: 12}).to.be.shallowDeepEqual({a: 10, b: null});
-        }).fail('Expected "12" to be null at path "./b".');
+        }).fail('Expected to have null but got "12" at path "/b".');
     });
 
     it('success on null', function() {
@@ -174,22 +173,69 @@ describe('chai-shallow-deep-equal', function() {
         new chai.Assertion(a.unknown).to.be.shallowDeepEqual(undefined);
     });
 
+    it('success on undefined sub-field', function() {
+        var a = {};
+        new chai.Assertion(a).to.be.shallowDeepEqual({b: undefined});
+    });
+
+    it('fail on undefined sub-field', function() {
+        new chai.Assertion(function() {
+            var a = { b: null };
+            new chai.Assertion(a).to.be.shallowDeepEqual({b: undefined});
+        }).fail('Expected to have undefined but got "null" at path "/b".');
+    });
+
+    it('fail on undefined array sub-field', function() {
+        new chai.Assertion(function() {
+            var a = { };
+            new chai.Assertion(a).to.be.shallowDeepEqual({ b: [ ] });
+        }).fail('Expected "b" field to be defined at path "/".');
+    });
+
+    it('fail on undefined item in array', function() {
+        new chai.Assertion(function() {
+            var a = { b: [ ] };
+            new chai.Assertion(a).to.be.shallowDeepEqual({ b: [ { c: 'hello' } ] });
+        }).fail('Expected "0" field to be defined at path "/b".');
+    });
+
     it('fail on null', function() {
         new chai.Assertion(function() {
             new chai.Assertion(23).to.be.shallowDeepEqual(null);
-        }).fail('Expected "23" to be null at path ".".');
+        }).fail('Expected to have null but got "23" at path "/".');
     });
 
     it('fail on undefined', function() {
         new chai.Assertion(function() {
             new chai.Assertion(23).to.be.shallowDeepEqual(undefined);
-        }).fail('Expected "23" to be undefined at path ".".');
+        }).fail('Expected to have undefined but got "23" at path "/".');
+    });
+
+    it('fail on null sub-field', function() {
+        new chai.Assertion(function() {
+            var a = { b: 'abc' };
+            new chai.Assertion(a).to.be.shallowDeepEqual({b: null});
+        }).fail('Expected to have null but got "abc" at path "/b".');
+    });
+
+    it('fail on null array sub-field', function() {
+        new chai.Assertion(function() {
+            var a = { b: null };
+            new chai.Assertion(a).to.be.shallowDeepEqual({ b: [ ] });
+        }).fail('Expected to have an array/object but got null at path "/b".');
+    });
+
+    it('fail on null item in array', function() {
+        new chai.Assertion(function() {
+            var a = { b: [ null ] };
+            new chai.Assertion(a).to.be.shallowDeepEqual({ b: [ { c: 'hello' } ] });
+        }).fail('Expected to have an array/object but got null at path "/b/0".');
     });
 
     it('fail on unexisting array', function() {
         new chai.Assertion(function() {
             new chai.Assertion(null).to.be.shallowDeepEqual(['a']);
-        }).fail('Expected null to be an array/object at path ".".');
+        }).fail('Expected to have an array/object but got null at path "/".');
     });
 
 });

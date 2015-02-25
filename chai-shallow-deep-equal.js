@@ -27,16 +27,16 @@
         // null value
         if (expect === null) {
             if (! (actual === null)) {
-              throw 'Expected "' + actual +'" to be null at path "'+ path +'".';
+              throw 'Expected to have null but got "' + actual +'" at path "'+ path +'".';
             }
 
             return true;
         }
 
-        // undefined value
+        // undefined expected value
         if (typeof expect == 'undefined') {
-            if (! (typeof actual == 'undefined')) {
-              throw 'Expected "' + actual +'" to be undefined at path "'+ path +'".';
+            if (typeof actual != 'undefined') {
+              throw 'Expected to have undefined but got "' + actual +'" at path "'+ path +'".';
             }
 
             return true;
@@ -45,7 +45,7 @@
         // scalar description
         if (/boolean|number|string/.test(typeof expect)) {
             if (expect != actual) {
-                throw 'Expected "' + actual +'" to equal "'+ expect +'" at path "'+ path +'".';
+                throw 'Expected to have "' + expect +'" but got "'+ actual +'" at path "'+ path +'".';
             }
 
             return true;
@@ -56,26 +56,30 @@
             if (actual instanceof Date) {
                 if (expect.getTime() != actual.getTime()) {
                     throw(
-                        'Expected "' + actual.toISOString() + '" to equal ' +
-                        '"' + expect.toISOString() + '" at path "' + path + '".'
+                        'Expected to have date "' + expect.toISOString() + '" but got ' +
+                        '"' + actual.toISOString() + '" at path "' + path + '".'
                     );
                 }
 
             } else {
-              throw(
-                  'Expected "' + actual + '" to equal ' +
-                  '"' + expect.toISOString() + '" at path "' + path + '".'
-              );
+                throw(
+                    'Expected to have date "' + expect.toISOString() + '" but got ' +
+                    '"' + actual + '" at path "' + path + '".'
+                );
             }
         }
 
         if (actual === null) {
-            throw 'Expected null to be an array/object at path "' + path + '".';
+            throw 'Expected to have an array/object but got null at path "' + path + '".';
         }
 
         // array/object description
         for (var prop in expect) {
-            shallowDeepEqual(expect[prop], actual[prop], path + '/' + prop);
+            if (typeof actual[prop] == 'undefined' && typeof expect[prop] != 'undefined') {
+                throw 'Expected "' + prop + '" field to be defined at path "' + path +  '".';
+            }
+
+            shallowDeepEqual(expect[prop], actual[prop], path + (path == '/' ? '' : '/') + prop);
         }
 
         return true;
@@ -83,7 +87,7 @@
 
     chai.Assertion.addMethod('shallowDeepEqual', function (expect) {
         try {
-            shallowDeepEqual(expect, this._obj, '.');
+            shallowDeepEqual(expect, this._obj, '/');
         }
         catch (msg) {
             this.assert(false, msg, undefined, expect, this._obj);

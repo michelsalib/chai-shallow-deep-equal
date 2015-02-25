@@ -1,6 +1,6 @@
 {
     "name": "chai-shallow-deep-equal",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Shallow deep equal assertion for chai",
     "keywords": [
         "chai",
@@ -27,7 +27,7 @@
         "chai": ">= 1.9.0"
     },
     "scripts": {
-        "test": "mocha --recursive -C"
+        "test": "mocha --recursive -C -R spec"
     },
     "main": "chai-shallow-deep-equal.js",
     "directories": {
