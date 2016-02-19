@@ -4,6 +4,9 @@
     "description": "Shallow deep equal assertion for chai",
     "keywords": [
         "chai",
+        "chai-plugin",
+        "browser",
+        "objects",
         "test",
         "assertion",
         "assert",
