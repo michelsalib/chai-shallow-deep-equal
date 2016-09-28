@@ -1,4 +1,4 @@
-declare module Chai {
+declare namespace Chai {
 
     // For Assert API
     interface Assert {
