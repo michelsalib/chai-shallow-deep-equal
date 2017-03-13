@@ -1,6 +1,6 @@
 {
   "name": "chai-shallow-deep-equal",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Shallow deep equal assertion for chai",
   "keywords": [
     "chai",
