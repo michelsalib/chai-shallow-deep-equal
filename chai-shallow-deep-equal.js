@@ -90,7 +90,7 @@
             shallowDeepEqual(expect, this._obj, '/');
         }
         catch (msg) {
-            this.assert(false, msg, undefined, expect, this._obj);
+            this.assert(false, msg, undefined, expect, this._obj, true);
         }
     });
 
